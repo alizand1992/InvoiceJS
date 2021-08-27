@@ -1,19 +1,21 @@
-import { useState } from 'react';
 import { Button, Form, Table } from 'react-bootstrap';
 import { Header } from './Header';
 import { InvoiceHeader } from './InvoiceHeader';
 import { LineInput } from './LineInput';
 
-const Invoice = () => {
-  const [lines, setLines] = useState([]);
+const Invoice = ({ invoice, setInvoice }) => {
+  const { lines } = invoice
 
   const addLine = (line) => {
-    setLines([...lines, line])
-  }
+    setInvoice({
+      ...invoice,
+      lines: [...lines, line]
+    });
+  };
 
   return (
     <Form>
-      <InvoiceHeader />
+      <InvoiceHeader invoice={invoice} setInvoice={setInvoice} />
       <br />
       <Table striped={true} bordered={true} hover={true}>
         <Header />

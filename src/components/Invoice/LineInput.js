@@ -38,20 +38,20 @@ export const LineInput = ({ addLine, size }) => {
         </tr>
       }
       <tr>
-        <td className="align-middle">{size + 1}</td>
-        <td>
+        <td className="align-middle" style={{ width: '5%' }}>{size + 1}</td>
+        <td style={{ width: '50%' }}>
           <Form.Control type="text" onChange={(e) => { setValue(e, 'desc')}} />
         </td>
-        <td>
+        <td style={{ width: '10%' }}>
           <Form.Control type="text" onChange={(e) => { setValue(e, 'count')}} />
         </td>
-        <td>
+        <td style={{ width: '10%' }}>
           <Form.Control type="text" onChange={(e) => { setValue(e, 'cost')}} />
         </td>
-        <td>
+        <td className="text-end" style={{ width: '10%' }}>
           ${isNaN(total) ? '0.00' : total}
         </td>
-        <td className="text-center">
+        <td className="text-center" style={{ width: '10%' }}>
           <Button size="sm" onClick={add}>+</Button>
         </td>
       </tr>
