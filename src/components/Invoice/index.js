@@ -2,6 +2,7 @@ import { Button, Form, Table } from 'react-bootstrap';
 import { Header } from './Header';
 import { InvoiceHeader } from './InvoiceHeader';
 import { LineInput } from './LineInput';
+import { formatter } from '../../util/TableUtil';
 
 const Invoice = ({ invoice, setInvoice }) => {
   const { lines } = invoice
@@ -12,6 +13,14 @@ const Invoice = ({ invoice, setInvoice }) => {
       lines: [...lines, line]
     });
   };
+
+  const removeItem = (index) => {
+    lines.splice(index, 1)
+    setInvoice({
+      ...invoice,
+      lines,
+    });
+  }
 
   return (
     <Form>
@@ -36,10 +45,10 @@ const Invoice = ({ invoice, setInvoice }) => {
                   ${line.cost}
                 </td>
                 <td className="text-end align-middle">
-                  ${line.count * line.cost}
+                  {formatter.format(line.count * line.cost)}
                 </td>
                 <td className="text-center">
-                  <Button size="sm" variant="danger">X</Button>
+                  <Button size="sm" variant="danger" onClick={() => removeItem(index)}>X</Button>
                 </td>
               </tr>
             );

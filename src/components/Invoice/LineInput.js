@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Alert, Button, Form } from 'react-bootstrap';
 import { useState } from 'react';
+import { formatter } from '../../util/TableUtil';
 
 export const LineInput = ({ addLine, size }) => {
   const [values, setValues] = useState({});
@@ -9,9 +10,15 @@ export const LineInput = ({ addLine, size }) => {
 
   const setValue = (e, field) => {
     setErrors([]);
+
+    let value = e.target.value;
+
+    if (field === 'count' || field === 'cost') {
+      value = value.trim().replace(/\D/g, '');
+    }
     setValues({
       ...values,
-      [field]: e.target.value,
+      [field]: value,
     });
   };
 
@@ -26,7 +33,7 @@ export const LineInput = ({ addLine, size }) => {
     setValues({});
   }
 
-  const total = values.count * values.cost;
+  const total = formatter.format(values.count * values.cost);
 
   return (
     <React.Fragment>
@@ -40,16 +47,22 @@ export const LineInput = ({ addLine, size }) => {
       <tr>
         <td className="align-middle" style={{ width: '5%' }}>{size + 1}</td>
         <td style={{ width: '50%' }}>
-          <Form.Control type="text" onChange={(e) => { setValue(e, 'desc')}} />
+          <Form.Control type="text"
+                        onChange={(e) => { setValue(e, 'desc')}}
+                        value={values.desc || ''} />
         </td>
         <td style={{ width: '10%' }}>
-          <Form.Control type="text" onChange={(e) => { setValue(e, 'count')}} />
+          <Form.Control type="text"
+                        onChange={(e) => { setValue(e, 'count')}}
+                        value={values.count || ''} />
         </td>
         <td style={{ width: '10%' }}>
-          <Form.Control type="text" onChange={(e) => { setValue(e, 'cost')}} />
+          <Form.Control type="text"
+                        onChange={(e) => { setValue(e, 'cost')}}
+                        value={values.cost || ''} />
         </td>
         <td className="text-end" style={{ width: '10%' }}>
-          ${isNaN(total) ? '0.00' : total}
+          {total === '$NaN' ? '$0.00' : total}
         </td>
         <td className="text-center" style={{ width: '10%' }}>
           <Button size="sm" onClick={add}>+</Button>

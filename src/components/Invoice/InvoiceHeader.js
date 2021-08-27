@@ -7,7 +7,9 @@ export const InvoiceHeader = ({ invoice, setInvoice }) => {
   // const [address, setAddress] = useState('')
 
   const name = invoice.customerInfo.name || '';
+  const project = invoice.customerInfo.project || '';
   const phoneNum = invoice.customerInfo.phoneNum || '';
+  const email = invoice.customerInfo.email || '';
   const address = invoice.customerInfo.address || '';
 
   const setInfo = (field, value) => {
@@ -22,6 +24,17 @@ export const InvoiceHeader = ({ invoice, setInvoice }) => {
 
   return (
     <React.Fragment>
+      <br />
+      <Form.Group as={Row}>
+        <Form.Label column={true} sm={3}>Project Name:</Form.Label>
+        <Col>
+          <Form.Control sm={9}
+                        type="text"
+                        placeholder="Project Name"
+                        onChange={(e) => setInfo('project', e.target.value)}
+                        value={project} />
+        </Col>
+      </Form.Group>
       <Form.Group as={Row}>
         <Form.Label column={true} sm={3}>Customer Name:</Form.Label>
         <Col>
@@ -41,6 +54,16 @@ export const InvoiceHeader = ({ invoice, setInvoice }) => {
                         placeholder="Customer Phone Number"
                         onChange={(e) => setInfo('phoneNum', e.target.value)}
                         value={phoneNum} />
+        </Col>
+      </Form.Group>
+      <Form.Group as={Row}>
+        <Form.Label column={true} sm={3}>E-Mail:</Form.Label>
+        <Col>
+          <Form.Control type="email"
+                        sm={9}
+                        placeholder="E-Mail"
+                        onChange={(e) => setInfo('email', e.target.value)}
+                        value={email} />
         </Col>
       </Form.Group>
       <Form.Group as={Row}>
