@@ -1,16 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
 
 export const InvoiceHeader = ({ invoice, setInvoice }) => {
-  // const [customerName, setCustomerName] = useState('');
-  // const [phoneNum, setPhoneNum] = useState('');
-  // const [address, setAddress] = useState('')
+  const { name, project, phoneNum, email, address } = invoice.customerInfo;
 
-  const name = invoice.customerInfo.name || '';
-  const project = invoice.customerInfo.project || '';
-  const phoneNum = invoice.customerInfo.phoneNum || '';
-  const email = invoice.customerInfo.email || '';
-  const address = invoice.customerInfo.address || '';
+  const [projectName, setProjectName] = useState(project || '');
+  const [customerName, setCustomerName] = useState(name || '');
+  const [customerPhone, setCustomerPhone] = useState(phoneNum || '');
+  const [customerEmail, setCustomerEmail] = useState(email || '');
+  const [customerAddress, setCustomerAddress] = useState(address || '');
 
   const setInfo = (field, value) => {
     setInvoice({
@@ -31,8 +29,9 @@ export const InvoiceHeader = ({ invoice, setInvoice }) => {
           <Form.Control sm={9}
                         type="text"
                         placeholder="Project Name"
-                        onChange={(e) => setInfo('project', e.target.value)}
-                        value={project} />
+                        onChange={(e) => setProjectName(e.target.value)}
+                        onBlur={(e) => setInfo('project', e.target.value)}
+                        value={projectName} />
         </Col>
       </Form.Group>
       <Form.Group as={Row}>
@@ -41,8 +40,9 @@ export const InvoiceHeader = ({ invoice, setInvoice }) => {
           <Form.Control sm={9}
                         type="text"
                         placeholder="Customer Name"
-                        onChange={(e) => setInfo('name', e.target.value)}
-                        value={name} />
+                        onChange={(e) => setCustomerName(e.target.value)}
+                        onBlur={(e) => setInfo('name', e.target.value)}
+                        value={customerName} />
         </Col>
       </Form.Group>
       <Form.Group as={Row}>
@@ -52,8 +52,9 @@ export const InvoiceHeader = ({ invoice, setInvoice }) => {
                         sm={9}
                         pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                         placeholder="Customer Phone Number"
-                        onChange={(e) => setInfo('phoneNum', e.target.value)}
-                        value={phoneNum} />
+                        onChange={(e) => setCustomerPhone(e.target.value)}
+                        onBlur={(e) => setInfo('phoneNum', e.target.value)}
+                        value={customerPhone} />
         </Col>
       </Form.Group>
       <Form.Group as={Row}>
@@ -62,8 +63,9 @@ export const InvoiceHeader = ({ invoice, setInvoice }) => {
           <Form.Control type="email"
                         sm={9}
                         placeholder="E-Mail"
-                        onChange={(e) => setInfo('email', e.target.value)}
-                        value={email} />
+                        onChange={(e) => setCustomerEmail(e.target.value)}
+                        onBlur={(e) => setInfo('email', e.target.value)}
+                        value={customerEmail} />
         </Col>
       </Form.Group>
       <Form.Group as={Row}>
@@ -72,8 +74,9 @@ export const InvoiceHeader = ({ invoice, setInvoice }) => {
           <Form.Control type="text"
                         sm={9}
                         placeholder="Address"
-                        onChange={(e) => setInfo('address', e.target.value)}
-                        value={address} />
+                        onChange={(e) => setCustomerAddress((e.target.value))}
+                        onBlur={(e) => setInfo('address', e.target.value)}
+                        value={customerAddress} />
         </Col>
       </Form.Group>
     </React.Fragment>
