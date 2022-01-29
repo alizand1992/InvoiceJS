@@ -4,6 +4,8 @@ import { Alert, Button, Form } from 'react-bootstrap';
 import { useState } from 'react';
 import { formatter } from '../../util/TableUtil';
 
+const MONEY_REGEX = /[0-9]*\.?[0-9]?[0-9]?/;
+
 export const LineInput = ({ addLine, size }) => {
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState([]);
@@ -14,7 +16,13 @@ export const LineInput = ({ addLine, size }) => {
     let value = e.target.value;
 
     if (field === 'count' || field === 'cost') {
-      value = value.trim().replace(/\D/g, '');
+      const regVal = value.trim().match(MONEY_REGEX);
+
+      if (regVal === null || regVal[0] === '') {
+        value = values[field];
+      } else {
+        value = regVal[0];
+      }
     }
     setValues({
       ...values,
