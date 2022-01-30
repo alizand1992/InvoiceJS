@@ -7,11 +7,11 @@ const Preview = ({ invoice }) => {
   pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
   const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'letter' });
 
-  doc.rect(0, 0, 215.9, 279.4)
+  doc.rect(0, 0, 215.9, 279.4);
 
   autoTable(doc, {
-    body: getHeaderData(invoice)
-  })
+    body: getHeaderData(invoice),
+  });
 
   autoTable(doc, {
     head: [
@@ -23,11 +23,11 @@ const Preview = ({ invoice }) => {
         { content: 'Total', styles: { halign: 'center' } }
       ],
     ],
-    body: getInvoiceBody(invoice.lines)
+    body: getInvoiceBody(invoice.lines),
   });
 
   const print = (doc) => {
-    doc.save(`invoice - ${invoice.customerInfo.name} - ${getFormattedDate(true)}`)
+    doc.save(`invoice - ${invoice.customerInfo.name} - ${getFormattedDate(true)}`);
   }
 
   return (
@@ -37,7 +37,7 @@ const Preview = ({ invoice }) => {
         <Page pageNumber={1} />
       </Document>
     </div>
-  )
+  );
 };
 
 export default Preview;
