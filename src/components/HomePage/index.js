@@ -1,12 +1,8 @@
-import { Fragment } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-
-import Menu from '../Menu';
 
 const HomePage = () => {
   return (
-    <Fragment>
-      <Menu />
+    <>
       <Container fluid={true}>
         <Row>
           <Col md={3}>
@@ -16,7 +12,7 @@ const HomePage = () => {
           </Col>
         </Row>
       </Container>
-    </Fragment>
+    </>
   );
 };
 
