@@ -1,7 +1,7 @@
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { Document, Page, pdfjs } from 'react-pdf';
-import { getHeaderData, getFormattedDate, getInvoiceBody } from '../../util/TableUtil';
+import { getHeaderData, getFormattedDate, getInvoiceBody } from '../../../util/TableUtil';
 
 const Preview = ({ invoice }) => {
   pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;

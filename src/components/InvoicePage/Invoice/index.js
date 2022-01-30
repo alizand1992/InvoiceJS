@@ -2,7 +2,7 @@ import { Button, Form, Table } from 'react-bootstrap';
 import { Header } from './Header';
 import { InvoiceHeader } from './InvoiceHeader';
 import { LineInput } from './LineInput';
-import { formatter } from '../../util/TableUtil';
+import { formatter } from '../../../util/TableUtil';
 
 const Invoice = ({ invoice, setInvoice }) => {
   const { lines } = invoice

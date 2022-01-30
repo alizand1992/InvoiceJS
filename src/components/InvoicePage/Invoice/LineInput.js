@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Alert, Button, Form } from 'react-bootstrap';
 import { useState } from 'react';
-import { formatter } from '../../util/TableUtil';
+import { formatter } from '../../../util/TableUtil';
 
 const MONEY_REGEX = /[0-9]*\.?[0-9]?[0-9]?/;
 
