@@ -1,12 +1,22 @@
-import { Container } from 'react-bootstrap';
+import { Fragment } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
+
+import Menu from '../Menu';
 
 const HomePage = () => {
   return (
-    <Container fluid={true}>
-      <div>
-        test
-      </div>
-    </Container>
+    <Fragment>
+      <Menu />
+      <Container fluid={true}>
+        <Row>
+          <Col md={3}>
+          </Col>
+          <Col md={9}>
+
+          </Col>
+        </Row>
+      </Container>
+    </Fragment>
   );
 };
 
