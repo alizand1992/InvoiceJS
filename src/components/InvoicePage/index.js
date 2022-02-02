@@ -4,12 +4,14 @@ import { Col, Container, Row } from 'react-bootstrap';
 
 import Invoice from './Invoice';
 import Preview from './Preview';
+import { getInvoiceDataById, initialState } from '../../util/InvoiceUtil';
 
-const InvoicePage = () => {
-  const [invoice, setInvoice] = useState({
-    customerInfo: {},
-    lines: [],
-  });
+const InvoicePage = ({ id }) => {
+  const [invoice, setInvoice] = useState(initialState);
+
+  if (id !== null && invoice === initialState) {
+    setInvoice(getInvoiceDataById(id));
+  }
 
   return (
     <Container fluid={true}>

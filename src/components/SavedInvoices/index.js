@@ -1,7 +1,17 @@
-import { Alert, Button, Col, Container, Row, Table } from 'react-bootstrap';
+import { Alert, Button, Container, Table } from 'react-bootstrap';
+import { Navigate } from 'react-router-dom';
+import PreviewModal from './PreviewModal';
+import { useState } from 'react';
 
-const SavedInvoices = () => {
+const SavedInvoices = ({ loadInvoice, id }) => {
+  const [show, setShow] = useState(false)
+  const [previewId, setPreviewId] = useState(null);
+
   let invoices = window.localStorage.getItem('invoices');
+
+  if (id !== null) {
+    return <Navigate to="/invoice" />;
+  }
 
   if (!invoices) {
     return (
@@ -15,8 +25,19 @@ const SavedInvoices = () => {
 
   invoices = JSON.parse(invoices).savedInvoices;
 
+  const hideModal = () => {
+    setShow(false);
+  };
+
+  const previewInvoice = (id) => {
+    setPreviewId(id);
+    setShow(true);
+  };
+
   return (
     <Container>
+      <PreviewModal id={previewId} show={show} hideModal={hideModal} />
+
       <Table striped={true} bordered={true} hover={true}>
         <thead>
         <tr>
@@ -29,21 +50,22 @@ const SavedInvoices = () => {
         <tbody>
         {Object.entries(invoices).map((invoice) => {
           const { customerInfo } = invoice[1];
+          const id = invoice[0];
+
           return (
-            <tr>
+            <tr key={invoice[0]}>
               <td>{customerInfo.project}</td>
               <td>{customerInfo.name}</td>
               <td>Some Date</td>
               <td>
-                <Button size="sm">Load</Button>&nbsp;
-                <Button size="sm">Preview</Button>
+                <Button size="sm" onClick={() => loadInvoice(id)}>Load</Button>&nbsp;
+                <Button size="sm" onClick={() => previewInvoice(id)}>Preview</Button>
               </td>
             </tr>
           );
         })}
         </tbody>
       </Table>
-
     </Container>
   )
 };

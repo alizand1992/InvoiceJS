@@ -1,38 +1,16 @@
 import { useState } from 'react';
 
 import { Button, Col, Row } from 'react-bootstrap';
-import { Document, Page, pdfjs } from 'react-pdf';
 import { v4 as uuidv4 } from 'uuid';
 
-import { jsPDF } from 'jspdf';
-import autoTable from 'jspdf-autotable';
+import { getFormattedDate } from '../../../util/TableUtil';
 
-import { getHeaderData, getFormattedDate, getInvoiceBody } from '../../../util/TableUtil';
+import PdfViewer from './PdfViewer';
+import { getDocFromInvoice } from '../../../util/InvoiceUtil';
 
 const Preview = ({ uuid, invoice }) => {
-  const [id, setId] = useState(uuid || uuidv4());
-
-  pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'letter' });
-
-  doc.rect(0, 0, 215.9, 279.4);
-
-  autoTable(doc, {
-    body: getHeaderData(invoice),
-  });
-
-  autoTable(doc, {
-    head: [
-      [
-        { content: '#', styles: { halign: 'center' } },
-        'Description',
-        { content: 'Count', styles: { halign: 'center' } },
-        { content: 'Cost', styles: { halign: 'center' } },
-        { content: 'Total', styles: { halign: 'center' } }
-      ],
-    ],
-    body: getInvoiceBody(invoice.lines),
-  });
+  const [id] = useState(uuid || uuidv4());
+  const doc = getDocFromInvoice(invoice);
 
   const print = (doc) => {
     doc.save(`invoice - ${invoice.customerInfo.name} - ${getFormattedDate(true)}`);
@@ -69,9 +47,7 @@ const Preview = ({ uuid, invoice }) => {
       <br />
       <Row>
         <Col>
-          <Document file={doc.output('bloburi')}>
-            <Page pageNumber={1} />
-          </Document>
+          <PdfViewer invoice={invoice} />
         </Col>
       </Row>
     </div>
