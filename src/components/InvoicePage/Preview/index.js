@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Button, Col, Row } from 'react-bootstrap';
+import { Button, Col, Form, Row } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 
 import { getFormattedDate } from '../../../util/TableUtil';
@@ -10,6 +10,7 @@ import { getDocFromInvoice } from '../../../util/InvoiceUtil';
 
 const Preview = ({ uuid, invoice }) => {
   const [id] = useState(uuid || uuidv4());
+  const [scale, setScale] = useState(2);
   const doc = getDocFromInvoice(invoice);
 
   const print = (doc) => {
@@ -26,6 +27,7 @@ const Preview = ({ uuid, invoice }) => {
     if (localStorage) {
       invoices = JSON.parse(localStorage);
     }
+    invoice.date = getFormattedDate();
 
     invoices.savedInvoices = {
       ...invoices.savedInvoices,
@@ -38,10 +40,23 @@ const Preview = ({ uuid, invoice }) => {
   return (
     <div>
       <Row>
-        <Col>
+        <Col md={2} xl={1}>
           <Button onClick={() => print(doc)}>Print</Button>
-          &nbsp;
+        </Col>
+        <Col md={2} xl={1}>
           <Button onClick={save}>Save</Button>
+        </Col>
+        <Col md={4} >
+          <Form.Group as={Row} className="justify-content-md-center">
+            <Form.Label column={true} md={2}>Size:</Form.Label>
+            <Col>
+              <Form.Select value={scale} onChange={(e) => {setScale(e.target.value)}}>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </Form.Select>
+            </Col>
+          </Form.Group>
         </Col>
       </Row>
       <br />

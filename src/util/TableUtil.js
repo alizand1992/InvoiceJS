@@ -17,7 +17,7 @@ export const getHeaderData = (invoice) => {
   }
 
   headerData.push(['Address', invoice.customerInfo.address || '' ]);
-  headerData.push(['Date', getFormattedDate()]);
+  headerData.push(['Date', invoice.date || getFormattedDate()]);
 
   return headerData;
 }

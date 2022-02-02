@@ -16,8 +16,8 @@ const InvoicePage = ({ id }) => {
   return (
     <Container fluid={true}>
       <Row>
-        <Col lg={6} md={12}><Invoice invoice={invoice} setInvoice={setInvoice} /></Col>
-        <Col lg={6} md={12}><Preview invoice={invoice} /></Col>
+        <Col xl={6} lg={12} md={12}><Invoice invoice={invoice} setInvoice={setInvoice} /></Col>
+        <Col xl={6} lg={12} md={12}><Preview invoice={invoice} /></Col>
       </Row>
     </Container>
   );

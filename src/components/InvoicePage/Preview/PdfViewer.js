@@ -1,7 +1,7 @@
 import { Document, Page } from 'react-pdf';
 import { getDocFromInvoice } from '../../../util/InvoiceUtil';
 
-const PdfViewer = ({ invoice, scale = 1 }) => {
+const PdfViewer = ({ invoice, scale = 2 }) => {
   const doc = getDocFromInvoice(invoice);
 
   return (
