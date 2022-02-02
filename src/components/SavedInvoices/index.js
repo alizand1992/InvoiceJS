@@ -2,12 +2,12 @@ import { Alert, Button, Container, Table } from 'react-bootstrap';
 import { Navigate } from 'react-router-dom';
 import PreviewModal from './PreviewModal';
 import { useState } from 'react';
+import { getAllInvoices, removeInvoice } from '../../util/InvoiceUtil';
 
 const SavedInvoices = ({ loadInvoice, id }) => {
   const [show, setShow] = useState(false)
   const [previewId, setPreviewId] = useState(null);
-
-  let invoices = window.localStorage.getItem('invoices');
+  const [invoices, setInvoices] = useState(getAllInvoices());
 
   if (id !== null) {
     return <Navigate to="/invoice" />;
@@ -23,8 +23,6 @@ const SavedInvoices = ({ loadInvoice, id }) => {
     );
   }
 
-  invoices = JSON.parse(invoices).savedInvoices;
-
   const hideModal = () => {
     setShow(false);
   };
@@ -33,6 +31,11 @@ const SavedInvoices = ({ loadInvoice, id }) => {
     setPreviewId(id);
     setShow(true);
   };
+
+  const deleteInvoice = (id) => {
+    removeInvoice(id);
+    setInvoices(getAllInvoices());
+  }
 
   return (
     <Container>
@@ -48,7 +51,7 @@ const SavedInvoices = ({ loadInvoice, id }) => {
         </tr>
         </thead>
         <tbody>
-        {Object.entries(invoices).map((invoice) => {
+        {Object.entries(invoices.savedInvoices).map((invoice) => {
           const { customerInfo, date } = invoice[1];
           const id = invoice[0];
 
@@ -59,7 +62,8 @@ const SavedInvoices = ({ loadInvoice, id }) => {
               <td>{date}</td>
               <td>
                 <Button size="sm" onClick={() => loadInvoice(id)}>Load</Button>&nbsp;
-                <Button size="sm" onClick={() => previewInvoice(id)}>Preview</Button>
+                <Button size="sm" onClick={() => previewInvoice(id)}>Preview</Button>&nbsp;
+                <Button size="sm" variant="danger" onClick={() => deleteInvoice(id)}>Delete</Button>
               </td>
             </tr>
           );

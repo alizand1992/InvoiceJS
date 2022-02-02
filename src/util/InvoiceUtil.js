@@ -18,6 +18,25 @@ export const getInvoiceDataById = (id) => {
   }
 };
 
+export const getAllInvoices = () => {
+  return JSON.parse(window.localStorage.getItem('invoices'));
+}
+
+export const removeInvoice = (id) => {
+  const invoices = getAllInvoices();
+  const oldSavedInvoices = invoices.savedInvoices;
+  const savedInvoices = {};
+
+  Object.entries(oldSavedInvoices).forEach(([key, value]) => {
+    if (key !== id) {
+      savedInvoices[key] = value;
+    }
+  });
+
+  invoices.savedInvoices = savedInvoices;
+  window.localStorage.setItem('invoices', JSON.stringify(invoices));
+}
+
 export const getDocFromInvoice = (invoice) => {
   pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
