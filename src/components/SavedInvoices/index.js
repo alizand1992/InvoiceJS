@@ -49,14 +49,14 @@ const SavedInvoices = ({ loadInvoice, id }) => {
         </thead>
         <tbody>
         {Object.entries(invoices).map((invoice) => {
-          const { customerInfo } = invoice[1];
+          const { customerInfo, date } = invoice[1];
           const id = invoice[0];
 
           return (
             <tr key={invoice[0]}>
               <td>{customerInfo.project}</td>
               <td>{customerInfo.name}</td>
-              <td>Some Date</td>
+              <td>{date}</td>
               <td>
                 <Button size="sm" onClick={() => loadInvoice(id)}>Load</Button>&nbsp;
                 <Button size="sm" onClick={() => previewInvoice(id)}>Preview</Button>
