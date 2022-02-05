@@ -2,7 +2,7 @@ import { Alert, Button, Container, Table } from 'react-bootstrap';
 import { Navigate } from 'react-router-dom';
 import PreviewModal from './PreviewModal';
 import { useState } from 'react';
-import { getAllInvoices, removeInvoice } from '../../util/InvoiceUtil';
+import { getAllInvoices, getDocFromInvoice, getInvoiceDataById, print, removeInvoice } from '../../util/InvoiceUtil';
 
 const SavedInvoices = ({ loadInvoice, id }) => {
   const [show, setShow] = useState(false)
@@ -33,8 +33,16 @@ const SavedInvoices = ({ loadInvoice, id }) => {
   };
 
   const deleteInvoice = (id) => {
-    removeInvoice(id);
-    setInvoices(getAllInvoices());
+    if (window.confirm('Are you sure you\'d like to delete this invoice?')) {
+      removeInvoice(id);
+      setInvoices(getAllInvoices());
+    }
+  }
+
+  const printInvoice = (id) => {
+    const invoice = getInvoiceDataById(id);
+    const doc = getDocFromInvoice(invoice);
+    print(doc, invoice);
   }
 
   return (
@@ -63,6 +71,7 @@ const SavedInvoices = ({ loadInvoice, id }) => {
               <td>
                 <Button size="sm" onClick={() => loadInvoice(id)}>Load</Button>&nbsp;
                 <Button size="sm" onClick={() => previewInvoice(id)}>Preview</Button>&nbsp;
+                <Button size="sm" onClick={() => printInvoice(id)}>Print</Button>&nbsp;
                 <Button size="sm" variant="danger" onClick={() => deleteInvoice(id)}>Delete</Button>
               </td>
             </tr>

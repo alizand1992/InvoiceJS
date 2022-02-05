@@ -1,7 +1,7 @@
 import { pdfjs } from 'react-pdf';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import { getHeaderData, getInvoiceBody } from './TableUtil';
+import { getFormattedDate, getHeaderData, getInvoiceBody } from './TableUtil';
 
 export const initialState = {
   customerInfo: {},
@@ -36,6 +36,10 @@ export const removeInvoice = (id) => {
   invoices.savedInvoices = savedInvoices;
   window.localStorage.setItem('invoices', JSON.stringify(invoices));
 }
+
+export const print = (doc, invoice) => {
+  doc.save(`invoice - ${invoice.customerInfo.name} - ${getFormattedDate(true)}`);
+};
 
 export const getDocFromInvoice = (invoice) => {
   pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;

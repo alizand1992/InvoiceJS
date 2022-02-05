@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
@@ -6,16 +6,13 @@ import { v4 as uuidv4 } from 'uuid';
 import { getFormattedDate } from '../../../util/TableUtil';
 
 import PdfViewer from './PdfViewer';
-import { getDocFromInvoice } from '../../../util/InvoiceUtil';
+
+import { getDocFromInvoice, print } from '../../../util/InvoiceUtil';
 
 const Preview = ({ dirty, invoice, setDirty, uuid }) => {
   const [id] = useState(uuid || uuidv4());
   const [scale, setScale] = useState(2);
   const doc = getDocFromInvoice(invoice);
-
-  const print = (doc) => {
-    doc.save(`invoice - ${invoice.customerInfo.name} - ${getFormattedDate(true)}`);
-  };
 
   const save = () => {
     const localStorage = window.localStorage.getItem('invoices');
@@ -42,7 +39,7 @@ const Preview = ({ dirty, invoice, setDirty, uuid }) => {
     <div>
       <Row>
         <Col md={2} xl={1}>
-          <Button onClick={() => print(doc)}>Print</Button>
+          <Button onClick={() => print(doc, invoice)}>Print</Button>
         </Col>
         <Col md={2} xl={1}>
           <Button onClick={save} disabled={!dirty}>Save</Button>
