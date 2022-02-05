@@ -19,6 +19,7 @@ export const getInvoiceDataById = (id) => {
 };
 
 export const getAllInvoices = () => {
+  // TODO: Add encryption to the local storage since it can be access by everyone.
   return JSON.parse(window.localStorage.getItem('invoices'));
 }
 

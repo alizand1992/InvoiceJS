@@ -5,6 +5,9 @@ import { useState } from 'react';
 import { getAllInvoices, getDocFromInvoice, getInvoiceDataById, print, removeInvoice } from '../../util/InvoiceUtil';
 
 const SavedInvoices = ({ loadInvoice, id }) => {
+  // TODO:
+  //   * Add Back up functionality
+  //   * Add send email functionality
   const [show, setShow] = useState(false)
   const [previewId, setPreviewId] = useState(null);
   const [invoices, setInvoices] = useState(getAllInvoices());
