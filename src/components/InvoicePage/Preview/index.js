@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
@@ -8,7 +8,7 @@ import { getFormattedDate } from '../../../util/TableUtil';
 import PdfViewer from './PdfViewer';
 import { getDocFromInvoice } from '../../../util/InvoiceUtil';
 
-const Preview = ({ uuid, invoice }) => {
+const Preview = ({ dirty, invoice, setDirty, uuid }) => {
   const [id] = useState(uuid || uuidv4());
   const [scale, setScale] = useState(2);
   const doc = getDocFromInvoice(invoice);
@@ -35,6 +35,7 @@ const Preview = ({ uuid, invoice }) => {
     };
 
     window.localStorage.setItem('invoices', JSON.stringify(invoices));
+    setDirty(false);
   }
 
   return (
@@ -44,7 +45,7 @@ const Preview = ({ uuid, invoice }) => {
           <Button onClick={() => print(doc)}>Print</Button>
         </Col>
         <Col md={2} xl={1}>
-          <Button onClick={save}>Save</Button>
+          <Button onClick={save} disabled={!dirty}>Save</Button>
         </Col>
         <Col md={4} >
           <Form.Group as={Row} className="justify-content-md-center">

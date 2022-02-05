@@ -11,6 +11,10 @@ export const InvoiceHeader = ({ invoice, setInvoice }) => {
   const [customerAddress, setCustomerAddress] = useState(address || '');
 
   const setInfo = (field, value) => {
+    if (invoice.customerInfo[field] === value) {
+      return;
+    }
+
     setInvoice({
       ...invoice,
       customerInfo: {
